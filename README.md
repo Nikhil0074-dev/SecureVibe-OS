@@ -4,20 +4,7 @@ SecureVibe OS is an AI-assisted infrastructure-as-code workspace for describing,
 
 > **Security note:** Generated infrastructure and policy results are starting points, not a guarantee of security, regulatory compliance, or production readiness. Review generated code, provider versions, IAM permissions, networking, costs, and organizational requirements before applying changes. Never commit API keys, passwords, or other secrets.
 
-## Contents
 
-- [Capabilities](#capabilities)
-- [Architecture and request flow](#architecture-and-request-flow)
-- [Repository layout](#repository-layout)
-- [Requirements](#requirements)
-- [Quick start: local pipeline](#quick-start-local-pipeline)
-- [Run the full stack with Docker Compose](#run-the-full-stack-with-docker-compose)
-- [Run services locally](#run-services-locally)
-- [Configuration](#configuration)
-- [Tests and validation](#tests-and-validation)
-- [Generated files and screenshots](#generated-files-and-screenshots)
-- [Current boundaries](#current-boundaries)
-- [Troubleshooting](#troubleshooting)
 
 ## Capabilities
 
