@@ -1,0 +1,21 @@
+resource "aws_security_group" "{{ id }}" {
+  name        = "{{ id }}"
+  description = "Managed by SecureVibe - least privilege"
+  vpc_id      = aws_vpc.{{ vpc }}.id
+{% for rule in ingress %}
+  ingress {
+    description = "allow {{ rule.port }} from {{ rule.cidr }}"
+    from_port   = {{ rule.port }}
+    to_port     = {{ rule.port }}
+    protocol    = "tcp"
+    cidr_blocks = ["{{ rule.cidr }}"]
+  }
+{% endfor %}
+  egress {
+    description = "egress within VPC only"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [aws_vpc.{{ vpc }}.cidr_block]
+  }
+}

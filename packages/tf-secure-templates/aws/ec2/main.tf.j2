@@ -1,0 +1,25 @@
+data "aws_ami" "{{ id }}" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["al2023-ami-*-x86_64"]
+  }
+}
+
+resource "aws_instance" "{{ id }}" {
+  ami                         = data.aws_ami.{{ id }}.id
+  instance_type               = "{{ instanceType }}"
+  subnet_id                   = aws_subnet.{{ vpc }}_private[0].id
+  associate_public_ip_address = false
+  monitoring                  = true
+  ebs_optimized               = true
+  metadata_options {
+    http_tokens   = "required"
+    http_endpoint = "enabled"
+  }
+  root_block_device {
+    encrypted = true
+  }
+  tags = { Name = "{{ id }}" }
+}

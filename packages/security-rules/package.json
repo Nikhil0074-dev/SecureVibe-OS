@@ -1,0 +1,1 @@
+{ "name": "@securevibe/security-rules", "version": "1.0.0", "scripts": { "test": "opa test src tests -v" } }

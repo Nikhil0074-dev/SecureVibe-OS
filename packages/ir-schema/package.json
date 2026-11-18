@@ -1,0 +1,9 @@
+{
+  "name": "@securevibe/ir-schema",
+  "version": "2.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": { "build": "tsc -p .", "test": "vitest run" },
+  "dependencies": { "zod": "^3.23.0", "zod-to-json-schema": "^3.23.0" },
+  "devDependencies": { "typescript": "^5.4.0", "vitest": "^1.6.0" }
+}

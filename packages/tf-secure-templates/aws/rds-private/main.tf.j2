@@ -1,0 +1,32 @@
+resource "aws_kms_key" "{{ id }}" {
+  description         = "KMS key for RDS {{ id }}"
+  enable_key_rotation = true
+}
+
+resource "aws_db_subnet_group" "{{ id }}" {
+  name       = "{{ id | replace('_', '-') }}"
+  subnet_ids = aws_subnet.{{ vpc }}_private[*].id
+}
+
+resource "aws_db_instance" "{{ id }}" {
+  identifier                          = "{{ id | replace('_', '-') }}"
+  engine                              = "{{ engine }}"
+  instance_class                      = "{{ instanceClass }}"
+  allocated_storage                   = 20
+  db_name                             = "appdb"
+  username                            = "dbadmin"
+  manage_master_user_password         = true
+  publicly_accessible                 = false
+  storage_encrypted                   = true
+  kms_key_id                          = aws_kms_key.{{ id }}.arn
+  multi_az                            = {{ 'true' if multiAz else 'false' }}
+  deletion_protection                 = true
+  backup_retention_period             = 7
+  iam_database_authentication_enabled = true
+  auto_minor_version_upgrade          = true
+  copy_tags_to_snapshot               = true
+  enabled_cloudwatch_logs_exports     = ["{{ 'postgresql' if engine == 'postgres' else 'general' }}"]
+  db_subnet_group_name                = aws_db_subnet_group.{{ id }}.name
+  skip_final_snapshot                 = false
+  final_snapshot_identifier           = "{{ id | replace('_', '-') }}-final"
+}

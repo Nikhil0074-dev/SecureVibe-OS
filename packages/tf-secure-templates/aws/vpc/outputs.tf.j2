@@ -1,0 +1,2 @@
+output "{{ id }}_id" { value = aws_vpc.{{ id }}.id }
+output "{{ id }}_private_subnet_ids" { value = aws_subnet.{{ id }}_private[*].id }
