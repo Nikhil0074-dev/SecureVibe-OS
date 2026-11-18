@@ -1,0 +1,14 @@
+{
+  "name": "securevibe-os",
+  "private": true,
+  "version": "4.0.0",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "e2e": "python3 scripts/e2e.py"
+  },
+  "devDependencies": { "turbo": "^2.0.0", "typescript": "^5.4.0" }
+}
