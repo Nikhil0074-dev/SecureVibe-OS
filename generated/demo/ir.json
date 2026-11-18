@@ -1,0 +1,70 @@
+{
+  "version": "v2.0",
+  "metadata": {
+    "compliance": [
+      "CIS-1.5",
+      "GDPR"
+    ],
+    "env": "prod",
+    "region": "eu-west-1"
+  },
+  "resources": [
+    {
+      "id": "vpc_main",
+      "type": "AWS::VPC",
+      "cidr": "10.0.0.0/16",
+      "maxAzs": 2,
+      "enableFlowLogs": true,
+      "secure": true,
+      "tags": {},
+      "dependencies": []
+    },
+    {
+      "id": "s3_app",
+      "type": "AWS::S3",
+      "blockPublicAcls": true,
+      "encryption": "aws:kms",
+      "versioning": true,
+      "containsPii": true,
+      "dataClassification": "PII",
+      "tags": {},
+      "dependencies": []
+    },
+    {
+      "id": "ec2_app",
+      "type": "AWS::EC2",
+      "instanceType": "t3.micro",
+      "subnetGroup": "private",
+      "requireImdsV2": true,
+      "encryptedRoot": true,
+      "associatePublicIp": false,
+      "tags": {},
+      "dependencies": [
+        "vpc_main"
+      ]
+    },
+    {
+      "id": "rds_main",
+      "type": "AWS::RDS",
+      "engine": "postgres",
+      "instanceClass": "db.t3.medium",
+      "private": true,
+      "encrypted": true,
+      "multiAz": true,
+      "subnetGroup": "private",
+      "deletionProtection": true,
+      "tags": {},
+      "dependencies": [
+        "vpc_main"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "ec2_app",
+      "to": "rds_main",
+      "port": 5432,
+      "encrypted": true
+    }
+  ]
+}
